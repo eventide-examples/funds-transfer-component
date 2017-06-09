@@ -6,8 +6,8 @@ module FundsTransferComponent
           transfer = FundsTransferComponent::Messages::Commands::Transfer.build
 
           transfer.funds_transfer_id = FundsTransfer.id
-          transfer.deposit_account_id = Deposit::Account.id
           transfer.withdrawal_account_id = Withdrawal::Account.id
+          transfer.deposit_account_id = Deposit::Account.id
           transfer.amount = Money.example
           transfer.time = Time::Effective.example
 

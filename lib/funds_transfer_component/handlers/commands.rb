@@ -33,9 +33,13 @@ module FundsTransferComponent
 
         initiated = Initiated.follow(transfer)
 
+        initiated.withdrawal_id = identifier.get
+
         initiated.processed_time = clock.iso8601
 
         stream_name = stream_name(initiated.funds_transfer_id)
+
+        initiated.metadata.correlation_stream_name = stream_name
 
         write.initial(initiated, stream_name)
       end

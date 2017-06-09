@@ -10,12 +10,20 @@ module FundsTransferComponent
         { :funds_transfer_id => :id },
         :withdrawal_account_id,
         :deposit_account_id,
+        :withdrawal_id,
         :amount
       ])
 
       initiated_time = Clock.parse(initiated.time)
 
       funds_transfer.initiated_time = initiated_time
+    end
+
+    apply Withdrawn do |withdrawn|
+      funds_transfer.id = withdrawn.funds_transfer_id
+
+      withdrawn_time = Clock.parse(withdrawn.time)
+      funds_transfer.withdrawn_time = withdrawn_time
     end
   end
 end

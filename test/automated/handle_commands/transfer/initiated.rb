@@ -17,6 +17,8 @@ context "Handle Commands" do
       amount = transfer.amount or fail
       effective_time = transfer.time or fail
 
+      funds_transfer_stream_name = "fundsTransfer-#{funds_transfer_id}"
+
       handler.(transfer)
 
       writer = handler.write
@@ -31,7 +33,7 @@ context "Handle Commands" do
 
       test "Written to the funds transfer stream" do
         written_to_stream = writer.written?(initiated) do |stream_name|
-          stream_name == "fundsTransfer-#{funds_transfer_id}"
+          stream_name == funds_transfer_stream_name
         end
 
         assert(written_to_stream)
@@ -44,6 +46,10 @@ context "Handle Commands" do
 
         test "withdrawal_account_id" do
           assert(initiated.withdrawal_account_id == withdrawal_account_id)
+        end
+
+        test "withdrawal_id" do
+          refute(initiated.withdrawal_id.nil?)
         end
 
         test "deposit_account_id" do
@@ -62,6 +68,12 @@ context "Handle Commands" do
           processed_time_iso8601 = Clock.iso8601(processed_time)
 
           assert(initiated.processed_time == processed_time_iso8601)
+        end
+      end
+
+      context "Metadata" do
+        test "correlation_stream_name" do
+          assert(initiated.metadata.correlation_stream_name == funds_transfer_stream_name)
         end
       end
     end
