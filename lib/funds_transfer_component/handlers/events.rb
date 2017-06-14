@@ -28,6 +28,10 @@ module FundsTransferComponent
           previous_message: initiated
         )
       end
+
+      handle Withdrawn do |withdrawn|
+        # TODO Send Deposit command to the Account component using account client
+      end
     end
   end
 end
