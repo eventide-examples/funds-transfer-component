@@ -33,5 +33,12 @@ module FundsTransferComponent
       deposited_time = Clock.parse(deposited.time)
       funds_transfer.deposited_time = deposited_time
     end
+
+    apply Transferred do |transferred|
+      funds_transfer.id = transferred.funds_transfer_id
+
+      transferred_time = Clock.parse(transferred.time)
+      funds_transfer.transferred_time = transferred_time
+    end
   end
 end
