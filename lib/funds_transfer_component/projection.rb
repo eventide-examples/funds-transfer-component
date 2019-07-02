@@ -26,5 +26,9 @@ module FundsTransferComponent
       withdrawn_time = Clock.parse(withdrawn.time)
       funds_transfer.withdrawn_time = withdrawn_time
     end
+
+    apply Deposited do |deposited|
+      # TODO: Implement
+    end
   end
 end

@@ -18,5 +18,9 @@ module FundsTransferComponent
     def withdrawn?
       !withdrawn_time.nil?
     end
+
+    def deposited?
+      # TODO: Implement
+    end
   end
 end

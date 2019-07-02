@@ -42,6 +42,14 @@ module FundsTransferComponent
 
           write.(withdrawn, stream_name, expected_version: version)
         end
+
+        handle ::Account::Client::Messages::Events::Deposited do |account_deposited|
+          # TODO: Get funds transfer entity by the ID in the correlation stream
+
+          # TODO: Ignore if funds transfer has already recorded its deposit
+
+          # TODO: Write Deposited event to funds transfer stream
+        end
       end
     end
   end
