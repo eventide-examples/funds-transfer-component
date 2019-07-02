@@ -34,9 +34,20 @@ module FundsTransferComponent
       end
 
       handle Withdrawn do |withdrawn|
-        # TODO Get deposit ID from funds transfer entity
+        funds_transfer_id = withdrawn.funds_transfer_id
 
-        # TODO Send Deposit message to account using deposit client
+        funds_transfer = store.fetch(funds_transfer_id)
+
+        account_id = funds_transfer.deposit_account_id
+        deposit_id = funds_transfer.deposit_id
+        amount = funds_transfer.amount
+
+        deposit.(
+          deposit_id: deposit_id,
+          account_id: account_id,
+          amount: amount,
+          previous_message: withdrawn
+        )
       end
     end
   end
