@@ -4,7 +4,12 @@ module FundsTransferComponent
       class Deposited
         include Messaging::Message
 
-        # TODO: Implement Deposited message
+        attribute :funds_transfer_id, String
+        attribute :deposit_id, String
+        attribute :account_id, String
+        attribute :amount, Numeric
+        attribute :time, String
+        attribute :processed_time, String
       end
     end
   end

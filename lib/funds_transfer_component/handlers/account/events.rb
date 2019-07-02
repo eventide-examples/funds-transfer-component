@@ -44,11 +44,25 @@ module FundsTransferComponent
         end
 
         handle ::Account::Client::Messages::Events::Deposited do |account_deposited|
-          # TODO: Get funds transfer entity by the ID in the correlation stream
+          correlation_stream_name = account_deposited.metadata.correlation_stream_name
+          funds_transfer_id = Messaging::StreamName.get_id(correlation_stream_name)
 
-          # TODO: Ignore if funds transfer has already recorded its deposit
+          funds_transfer, version = store.fetch(funds_transfer_id, include: :version)
 
-          # TODO: Write Deposited event to funds transfer stream
+          if funds_transfer.deposited?
+            logger.info(tag: :ignored) { "Event ignored (Event: #{account_deposited.class.name}, Funds Transfer ID: #{funds_transfer_id}, Deposit Account ID: #{account_deposited.account_id})" }
+            return
+          end
+
+          deposited = Deposited.follow(account_deposited, exclude: :sequence)
+
+          deposited.funds_transfer_id = funds_transfer_id
+
+          deposited.processed_time = clock.iso8601
+
+          stream_name = stream_name(funds_transfer_id)
+
+          write.(deposited, stream_name, expected_version: version)
         end
       end
     end

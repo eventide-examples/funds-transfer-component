@@ -28,7 +28,10 @@ module FundsTransferComponent
     end
 
     apply Deposited do |deposited|
-      # TODO: Implement
+      funds_transfer.id = deposited.funds_transfer_id
+
+      deposited_time = Clock.parse(deposited.time)
+      funds_transfer.deposited_time = deposited_time
     end
   end
 end
