@@ -8,6 +8,7 @@ module FundsTransferComponent
         funds_transfer.deposit_account_id = Deposit::Account.id
         funds_transfer.withdrawal_account_id = Withdrawal::Account.id
         funds_transfer.withdrawal_id = Withdrawal.id
+        funds_transfer.deposit_id = Deposit.id
         funds_transfer.amount = self.amount
 
         funds_transfer.initiated_time = Time::Effective::Raw.example

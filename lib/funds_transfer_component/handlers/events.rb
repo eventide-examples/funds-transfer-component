@@ -7,10 +7,14 @@ module FundsTransferComponent
       include Messages::Commands
       include Messages::Events
 
+      dependency :store, Store
       dependency :withdraw, ::Account::Client::Withdraw
+      dependency :deposit, ::Account::Client::Deposit
 
       def configure
+        Store.configure(self)
         ::Account::Client::Withdraw.configure(self)
+        ::Account::Client::Deposit.configure(self)
       end
 
       category :funds_transfer
@@ -30,7 +34,9 @@ module FundsTransferComponent
       end
 
       handle Withdrawn do |withdrawn|
-        # TODO Send Deposit command to the Account component using account client
+        # TODO Get deposit ID from funds transfer entity
+
+        # TODO Send Deposit message to account using deposit client
       end
     end
   end

@@ -34,6 +34,7 @@ module FundsTransferComponent
         initiated = Initiated.follow(transfer)
 
         initiated.withdrawal_id = identifier.get
+        initiated.deposit_id = identifier.get
 
         initiated.processed_time = clock.iso8601
 

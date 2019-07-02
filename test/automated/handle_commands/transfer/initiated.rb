@@ -56,6 +56,10 @@ context "Handle Commands" do
           assert(initiated.deposit_account_id == deposit_account_id)
         end
 
+        test "deposit_id" do
+          refute(initiated.deposit_id.nil?)
+        end
+
         test "amount" do
           assert(initiated.amount == amount)
         end

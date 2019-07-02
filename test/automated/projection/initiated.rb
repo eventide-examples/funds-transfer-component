@@ -16,6 +16,7 @@ context "Projection" do
     withdrawal_account_id = initiated.withdrawal_account_id or fail
     deposit_account_id = initiated.deposit_account_id or fail
     withdrawal_id = initiated.withdrawal_id or fail
+    deposit_id = initiated.deposit_id or fail
     amount = initiated.amount or fail
     initiated_time_iso8601 = initiated.time or fail
 
@@ -35,6 +36,10 @@ context "Projection" do
 
     test "Withdrawal ID" do
       assert(funds_transfer.withdrawal_id == withdrawal_id)
+    end
+
+    test "Deposit ID" do
+      assert(funds_transfer.deposit_id == deposit_id)
     end
 
     test "Amount" do
