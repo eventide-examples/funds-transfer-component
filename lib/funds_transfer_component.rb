@@ -9,6 +9,8 @@ require 'funds_transfer_component/messages/events/deposited'
 require 'funds_transfer_component/messages/events/transferred'
 require 'funds_transfer_component/messages/events/cancelled'
 
+require 'funds_transfer_component/commands/transfer'
+
 require 'funds_transfer_component/funds_transfer'
 require 'funds_transfer_component/projection'
 require 'funds_transfer_component/store'
