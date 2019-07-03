@@ -12,6 +12,7 @@ module FundsTransferComponent
     attribute :withdrawn_time, Time
     attribute :deposited_time, Time
     attribute :transferred_time, Time
+    attribute :cancelled_time, Time
 
     def initiated?
       !initiated_time.nil?
@@ -27,6 +28,10 @@ module FundsTransferComponent
 
     def transferred?
       !transferred_time.nil?
+    end
+
+    def cancelled?
+      !cancelled_time.nil?
     end
   end
 end

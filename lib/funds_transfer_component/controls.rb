@@ -18,5 +18,6 @@ require 'funds_transfer_component/controls/events/initiated'
 require 'funds_transfer_component/controls/events/withdrawn'
 require 'funds_transfer_component/controls/events/deposited'
 require 'funds_transfer_component/controls/events/transferred'
+require 'funds_transfer_component/controls/events/cancelled'
 
 require 'funds_transfer_component/controls/write/transfer'

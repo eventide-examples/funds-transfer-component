@@ -40,5 +40,12 @@ module FundsTransferComponent
       transferred_time = Clock.parse(transferred.time)
       funds_transfer.transferred_time = transferred_time
     end
+
+    apply Cancelled do |cancelled|
+      funds_transfer.id = cancelled.funds_transfer_id
+
+      cancelled_time = Clock.parse(cancelled.time)
+      funds_transfer.cancelled_time = cancelled_time
+    end
   end
 end

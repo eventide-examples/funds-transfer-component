@@ -64,6 +64,33 @@ module FundsTransferComponent
 
           write.(deposited, stream_name, expected_version: version)
         end
+
+        handle ::Account::Client::Messages::Events::WithdrawalRejected do |withdrawal_rejected|
+          correlation_stream_name = withdrawal_rejected.metadata.correlation_stream_name
+          funds_transfer_id = Messaging::StreamName.get_id(correlation_stream_name)
+
+          funds_transfer, version = store.fetch(funds_transfer_id, include: :version)
+
+          if funds_transfer.cancelled?
+            logger.info(tag: :ignored) { "Event ignored (Event: #{withdrawal_rejected.class.name}, Funds Transfer ID: #{funds_transfer_id}, Deposit Account ID: #{withdrawal_rejected.account_id})" }
+            return
+          end
+
+          cancelled = Cancelled.follow(withdrawal_rejected, copy: [
+            :withdrawal_id,
+            { :account_id => :withdrawal_account_id },
+            :amount,
+            :time
+          ])
+
+          cancelled.funds_transfer_id = funds_transfer_id
+
+          cancelled.deposit_account_id = funds_transfer.deposit_account_id
+
+          stream_name = stream_name(funds_transfer_id)
+
+          write.(cancelled, stream_name, expected_version: version)
+        end
       end
     end
   end
